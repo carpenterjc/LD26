@@ -7,9 +7,10 @@ package
 		public function Main()
 		{
 			super(640, 480, 60, false);
-			FP.world = new IntroWorld;
+			FP.world = new GameWorld;
 			FP.console.enable();
 			FP.screen.scale = 2;
+			FP.screen.color = 0xFFF7EA;
 		}
 
 		override public function init():void

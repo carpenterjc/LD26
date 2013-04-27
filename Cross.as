@@ -26,15 +26,18 @@ package
 		{
 			sprite.add("stand", [0], 10, true);
 			setHitbox(14,14,1,1);
-			sprite.x = 0;
-			sprite.y = 0;
-			width = 16
-			height = 16;
+			sprite.x = -8;
+			sprite.y = -8;
+			width = 14
+			height = 14;
 			type = "cross";
 			x = 640/4;
 			y = 480/4;
+			originX = 8;
+			originY = 8;
 			_velocity = new Point;
 
+			graphic = sprite;
 
 		}
 
@@ -61,6 +64,9 @@ package
 			_velocity.x = 100 * FP.elapsed * movement.x;
 			_velocity.y = 100 * FP.elapsed * movement.y;			
 
+			x += _velocity.x;
+
+			y += _velocity.y;
 			super.update();
 		}
 

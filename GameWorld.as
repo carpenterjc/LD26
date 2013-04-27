@@ -3,6 +3,7 @@ package {
 	import flash.geom.Point;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.Entity;
+	import net.flashpunk.FP;
 	/**
 	 * @author jamescarpenter
 	 */

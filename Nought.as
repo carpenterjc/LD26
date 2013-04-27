@@ -22,15 +22,19 @@ package
 		public function Nought(cross:Cross)
 		{
 			sprite.add("waiting", [0], 5, true);
-			sprite.x = 0; 
-			sprite.y = 0;
-			height = 16;
-			width = 32;
-			setHitbox(16, 16, 16, 0);
+			sprite.x = -16; 
+			sprite.y = -8;
+			height = 14;
+			width = 14;
+			originX = -8;
+			originY = -8;
+
 			type = "nought";
 			state = "waiting";
-
-
+			graphic = sprite;
+			var pos:Point = findNewPosition();
+			x = pos.x;
+			y = pos.y;
 		}
 
 		public function findNewPosition() : Point

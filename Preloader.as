@@ -12,8 +12,8 @@ package
 		private static const mustClick: Boolean = false;
 		private static const mainClassName: String = "Main";
 		
-		private static const BG_COLOR:uint = 0x001000;
-		private static const FG_COLOR:uint = 0xFFF0FF;
+		private static const BG_COLOR:uint = 0xFFF7EA;
+		private static const FG_COLOR:uint = 0x001000;
 		
 		[Embed(source = 'net/flashpunk/graphics/04B_03__.TTF', embedAsCFF="false", fontFamily = 'default')]
 		private static const FONT:Class;
