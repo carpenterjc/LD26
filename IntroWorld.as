@@ -31,7 +31,7 @@ package {
 		{
 			if(Input.check(Key.SPACE) && waited)
 			{
-				//FP.world = new EditorWorld();
+				FP.world = new GameWorld();
 			}
 		}
 		public function timeout() :void
