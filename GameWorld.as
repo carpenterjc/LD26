@@ -19,6 +19,8 @@ package {
 			var cross:Cross = new Cross();
 			add(cross);
 			add(new Nought(cross));
+			add(new Nought(cross));
+			add(new Nought(cross));
 		}
 
 	}
