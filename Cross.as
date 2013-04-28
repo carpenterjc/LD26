@@ -148,7 +148,11 @@ package
 
 		public function nextLevel():void
 		{
-			FP.world = new IntroWorld(level+1);
+			if(state != "nextlevel")
+			{
+				state = "nextlevel"
+				FP.world = new IntroWorld(level+1);
+			}
 		}
 
         override public function update():void
@@ -159,7 +163,7 @@ package
 			if (Input.check(Key.DOWN) && !stunned) movement.y++;
 			if (Input.check(Key.LEFT) && !stunned) movement.x--;
 			if (Input.check(Key.RIGHT) && !stunned) movement.x++;
-			if(Input.check(Key.SPACE) && !stunned )
+			if((Input.check(Key.SPACE) || Input.check(Key.SHIFT)) && !stunned )
 			{
 
 				if(isSingleDirection(movement))
