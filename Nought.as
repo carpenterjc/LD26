@@ -12,6 +12,7 @@ package
 	import net.flashpunk.Sfx;
 	import net.flashpunk.masks.Pixelmask;
 	import net.flashpunk.tweens.motion.LinearMotion;
+	import net.flashpunk.tweens.misc.VarTween;
 
 
 	public class Nought extends Entity
@@ -21,17 +22,21 @@ package
 		[Embed(source = 'graphics/noughtmask.png')] private const MASK:Class;
 		public var spritemask:Image = new Image(MASK);
 
+		[Embed(source = 'audio/bubble.mp3')] private const BUBBLE:Class;
+		public var bubble:Sfx = new Sfx(BUBBLE);	
 
-		// States: moving, breeding, waiting, dieing, eatcross
+		[Embed(source = 'audio/fizz.mp3')] private const FIZZ:Class;
+		public var fizz:Sfx = new Sfx(FIZZ);	
+
+		// States: moving, breeding, waiting, dieing, eatcross, new
 		private var state: String; 
 		private var desiredLocation: Point; // Where it wants to move to
 		private var cross: Cross;
 		private var alarm:Alarm = new Alarm(1, onWakeup);
 		private var positiontween:LinearMotion = new LinearMotion(onFinshiedMoving);
+		private var BREEDING_TIME:Number = 2.4; 
 
-
-
-		public function Nought(c:Cross)
+		public function Nought(c:Cross, cx:Number = 0, cy: Number = 0, dx:Number = 0, dy: Number = 0)
 		{
 			cross = c;
 			sprite.add("waiting", [0], 5, true);
@@ -47,19 +52,44 @@ package
 
 			type = "nought";
 			state = "waiting";
-			graphic = sprite;
-			var pos:Point = findNewPosition();
-			x = pos.x;
-			y = pos.y;
-			positiontween.x = pos.x;
-			positiontween.y = pos.y;
-			
+			graphic = sprite;			
+
 			addTween(positiontween, true);
 			addTween(alarm, true);
-			wait();
+			
+			if(cx == 0 && cy == 0)
+			{
+				var pos:Point = findNewPosition();
+				x = pos.x;
+				y = pos.y;			
+				positiontween.x = pos.x;
+				positiontween.y = pos.y;
+				wait();
+			}
+			else 
+			{
+				state = "new";
+				x = cx;
+				y = cy;
+				sprite.alpha = 0;
+				positiontween.setMotion(cx, cy, dx, dy, BREEDING_TIME);
+			}
 
+			
+		}
 
+		public function die() : void
+		{
+			state = "dieing";
+			fizz.play(1, (x-160)/160.0);
+			var tween:VarTween = new VarTween(onDead);
+			tween.tween(sprite, "alpha", 0, 4.2);
+			addTween(tween);
+		}
 
+		public function onDead() : void
+		{
+			world.remove(this);
 		}
 
 		public override function update() : void
@@ -81,34 +111,40 @@ package
 
 		public function onFinshiedMoving():void
 		{
+			if(state == "new")
+			{
+				sprite.alpha = 1;
+			}
 			if(state != "eatcross")
 			{
 				wait();
 			}
+
 		}
 
 		public function onAmimationFinished():void
 		{
 			if(state == "breeding")
 			{
-				var nought:Nought = new Nought(cross);
-				nought.x = x + 8;
-				nought.y = y;
-				world.add(nought);
-				x = x - 8;
-
-				wait();
+				world.remove(this);
 			}	
 		}
 
 		public function onWakeup() : void
 		{
-			decideWhatToDoNext();
+			if(state != "dieing")
+			{
+				decideWhatToDoNext();
+			}
 		}
 
 
 		private function decideWhatToDoNext():void
 		{
+			if(state == "new")
+			{
+				return;
+			}
 			var chance:Number = Math.random()*10;
 			if(chance > 6)
 			{
@@ -122,8 +158,16 @@ package
 
 		private function decidedToBreed():void
 		{
-			sprite.play("breeding");
-			state = "breeding";
+			if(state != "breeding")
+			{
+				var a:Nought = new Nought(cross, x, y, x-8, y);
+				var b:Nought = new Nought(cross, x, y, x+8, y);
+				world.add(a);
+				world.add(b);
+				sprite.play("breeding");
+				state = "breeding";
+				bubble.play(0.5, (x-160)/160.0);
+			}
 		}
 
 		private function decidedToMove() : void
