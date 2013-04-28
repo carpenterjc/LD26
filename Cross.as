@@ -41,6 +41,8 @@ package
 		[Embed(source = 'audio/click.mp3')] private const CLICK:Class;
 		public var clicksound:Sfx = new Sfx(CLICK);	
 
+		[Embed(source = 'audio/scrunch.mp3')] private const SCRUNCH:Class;
+		public var scrunchsound:Sfx = new Sfx(SCRUNCH);	
 
 		public function Cross()
 		{
@@ -184,6 +186,7 @@ package
 			{
 				if(state == "selecting")
 				{
+					clicksound.play(0.5, (x-160)/160.0)
 					selectImage.visible = false;
 					state= "normal";
 					killNoughts();
@@ -203,6 +206,7 @@ package
 
 		public function stun() : void
 		{
+			scrunchsound.play(1, (x-160)/160.0)
 			stunned = true;
 		}
 
