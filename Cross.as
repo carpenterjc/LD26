@@ -141,9 +141,8 @@ package
 			{
 				possibilities[0].die();
 
-				var noughts:Vector.<Nought> = new Vector.<Nought>();
-				world.getType("nought", noughts);
-				FP.alarm(2, nextLevel);
+
+				
 			}
 		}
 
@@ -212,6 +211,13 @@ package
 
 			y += _velocity.y;
 
+
+			var noughts:Vector.<Nought> = new Vector.<Nought>();
+			world.getType("nought", noughts);
+			if(noughts.length == 0)
+			{
+				FP.alarm(2, nextLevel);
+			}
 			super.update();
 		}
 
