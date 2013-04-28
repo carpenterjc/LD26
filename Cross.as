@@ -38,16 +38,19 @@ package
 		private var startPos:Point = new Point(0,0);
 		private var selectImage:Image = Image.createRect(1,1,0x5A1D33, 0.5);
 
+		private var level:int;
+
 		[Embed(source = 'audio/click.mp3')] private const CLICK:Class;
 		public var clicksound:Sfx = new Sfx(CLICK);	
 
 		[Embed(source = 'audio/scrunch.mp3')] private const SCRUNCH:Class;
 		public var scrunchsound:Sfx = new Sfx(SCRUNCH);	
 
-		public function Cross()
+		public function Cross(l: int)
 		{
+			level = l;
 			sprite.add("stand", [0], 10, true);
-			sprite.add("die", [4,8], 10, false);
+			sprite.add("die", [0, 4, 5, 6, 7,8], 10, false);
 			mask=new Pixelmask(MASK, -8, -8);
 			//setHitbox(14,14,1,1);
 			sprite.x = -8;
@@ -137,9 +140,17 @@ package
 			if(possibilities.length == 1)
 			{
 				possibilities[0].die();
+
+				var noughts:Vector.<Nought> = new Vector.<Nought>();
+				world.getType("nought", noughts);
+				FP.alarm(2, nextLevel);
 			}
 		}
 
+		public function nextLevel():void
+		{
+			FP.world = new IntroWorld(level+1);
+		}
 
         override public function update():void
 		{
@@ -212,8 +223,19 @@ package
 
 		public function die() : void
 		{
-			sprite.play("die");
+			if(state != "dead")
+			{
+				state = "dead"
+				FP.log("die");
+				sprite.play("die");
+				FP.alarm(5, timeout);
+			}
+		}
 
+		public function timeout() : void
+		{
+			FP.log("timeout");
+			FP.world = new DeadWorld();
 		}
 	}
 }

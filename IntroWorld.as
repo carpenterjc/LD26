@@ -6,32 +6,40 @@ package {
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
+	import net.flashpunk.Sfx;
+	import net.flashpunk.graphics.Image;
+
 	/**
 	 * @author jamescarpenter
 	 */
 	public class IntroWorld extends World
 	{
 		private var waited:Boolean = false;
+		[Embed(source = 'graphics/intro.png')] private const INTRO:Class;
+		public var intro:Image = new Image(INTRO);
+		public var level: int;
 
-		public function IntroWorld()
+
+		public function IntroWorld(l: int)
 		{
-			
+			level = l;	
 		}
 		
 		override public function begin():void
 		{
+
 			var statusentity:Entity = new Entity();
-			var statusstring:Text = new Text("Your a x, you don't like the o's they multiply, mess up the place, and spoil the otherwise spotles world. Rid the world of them.");
-			statusentity.graphic = statusstring;
+			statusentity.graphic = intro;
 			add(statusentity);
 			FP.alarm(2, timeout);
 		}
+
 
 		override public function update():void
 		{
 			if(Input.check(Key.SPACE) && waited)
 			{
-				FP.world = new GameWorld();
+				FP.world = new GameWorld(level);
 			}
 		}
 		public function timeout() :void

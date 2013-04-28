@@ -9,18 +9,56 @@ package {
 	 */
 	public class GameWorld extends World
 	{
-		public function GameWorld()
+		public var level:int;
+		public function GameWorld(l:int)
 		{
-			
+			level = l;
 		}
 		
 		override public function begin():void
 		{
-			var cross:Cross = new Cross();
+			var cross:Cross = new Cross(level);
 			add(cross);
-			add(new Nought(cross));
-			add(new Nought(cross));
-			add(new Nought(cross));
+
+			if(level == 1)
+			{
+				add(new Nought(cross));
+			}
+			if(level == 2)
+			{
+				add(new Nought(cross));
+
+				add(new Nought(cross));
+				add(new Nought(cross));
+			}
+			if(level == 3)
+			{
+				add(new Nought(cross));
+
+				add(new Nought(cross));
+				add(new Nought(cross));
+
+				add(new Nought(cross));
+				add(new Nought(cross));
+				add(new Nought(cross));
+			}
+			if(level == 4)
+			{
+				add(new Nought(cross));
+
+				add(new Nought(cross));
+				add(new Nought(cross));
+
+				add(new Nought(cross));
+				add(new Nought(cross));
+				add(new Nought(cross));
+
+				add(new Nought(cross));
+				add(new Nought(cross));
+				add(new Nought(cross));
+				add(new Nought(cross));
+			}
+
 		}
 
 	}

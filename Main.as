@@ -7,17 +7,12 @@ package
 		public function Main()
 		{
 			super(640, 480, 60, false);
-			FP.world = new GameWorld;
+			FP.world = new IntroWorld(1);
 			FP.console.enable();
 			FP.screen.scale = 2;
 			FP.screen.color = 0xFFF7EA;
 		}
 
-		override public function init():void
-		{
-			trace("FlashPunk has started successfully!");
-			//add(new Villan);
-		}
 
 	}
 }
