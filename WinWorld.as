@@ -18,6 +18,8 @@ package {
 		[Embed(source = 'graphics/win.png')] private const WIN:Class;
 		public var win:Image = new Image(WIN);
 
+		[Embed(source = 'audio/introwaltz.mp3')] private const WALTZ:Class;
+		public var waltz:Sfx = new Sfx(WALTZ);	
 
 		public function WinWorld()
 		{
@@ -30,7 +32,7 @@ package {
 			var statusentity:Entity = new Entity();
 			statusentity.graphic = win;
 			add(statusentity);
-			
+			waltz.loop();
 
 		}
 

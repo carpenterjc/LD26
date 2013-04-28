@@ -46,6 +46,11 @@ package
 		[Embed(source = 'audio/scrunch.mp3')] private const SCRUNCH:Class;
 		public var scrunchsound:Sfx = new Sfx(SCRUNCH);	
 
+		[Embed(source = 'audio/maintune.mp3')] private const TUNE:Class;
+		public var tune:Sfx = new Sfx(TUNE);	
+
+		private var sound:Boolean = true;
+
 		public function Cross(l: int)
 		{
 			level = l;
@@ -73,7 +78,7 @@ package
 			graphicList = new Graphiclist(sprite, trailEmitter, selectImage);
 			selectImage.visible = false;
 			graphic = graphicList;
-
+			tune.loop(0.65);
 		}
 
 		public override function render():void 
@@ -151,6 +156,7 @@ package
 			if(state != "nextlevel")
 			{
 				state = "nextlevel"
+				tune.stop();
 				FP.world = new IntroWorld(level+1);
 			}
 		}
@@ -174,7 +180,7 @@ package
 						startPos.y = y;
 						state = "selecting";					
 						selectImage.visible = true;
-						clicksound.play(0.5, (x-160)/160.0)
+						clicksound.play(0.9, (x-160)/160.0)
 					}				
 					selectImage.scaleX = startPos.x - x;
 					selectImage.scaleY = startPos.y - y;
@@ -200,7 +206,7 @@ package
 			{
 				if(state == "selecting")
 				{
-					clicksound.play(0.5, (x-160)/160.0)
+					clicksound.play(0.9, (x-160)/160.0)
 					selectImage.visible = false;
 					state= "normal";
 					killNoughts();
@@ -235,6 +241,7 @@ package
 		{
 			if(state != "dead")
 			{
+				tune.stop();
 				state = "dead"
 				FP.log("die");
 				sprite.play("die");
@@ -245,7 +252,7 @@ package
 		public function timeout() : void
 		{
 			FP.log("timeout");
-			FP.world = new DeadWorld();
+			FP.world = new DeadWorld(level);
 		}
 	}
 }

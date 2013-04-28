@@ -50,7 +50,7 @@ package {
 			selectentity.graphic = select;
 			selectentity.y = 146 + (level-1)*25;
 			add(selectentity);
-			waltz.loop();
+			waltz.loop(0.8);
 			FP.alarm(2, timeout);
 		}
 

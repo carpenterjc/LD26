@@ -23,9 +23,11 @@ package {
 		[Embed(source = 'audio/lotsbubbles.mp3')] private const BUBBLE:Class;
 		public var bubble:Sfx = new Sfx(BUBBLE);	
 
-		public function DeadWorld()
-		{
+		private var level: int;
 
+		public function DeadWorld(l: int)
+		{
+			level = l;
 		}
 		
 		override public function begin():void
@@ -64,7 +66,7 @@ package {
 			if(Input.check(Key.SPACE) && waited)
 			{
 				FP.log("deadworld - space");
-				FP.world = new IntroWorld(1);
+				FP.world = new IntroWorld(level);
 			}
 		}
 		public function timeout() :void
