@@ -4,10 +4,6 @@ pipeline {
     stage('rrrrr') {
       steps {
         parallel(
-          "rrrrr": {
-            echo 'hello'
-            
-          },
           "rvgf": {
             sleep 2
             
@@ -19,7 +15,7 @@ pipeline {
         )
       }
     }
-    stage('') {
+    stage('error') {
       steps {
         parallel(
           "1": {
